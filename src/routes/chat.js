@@ -4,6 +4,9 @@ const chatController = new ChatManager()
 const router = express.Router();
 
 // Recieve chat from user
-router.post("/api", chatController.handleChatRequest)
+
+router.post("/chat", chatController.handleChatRequest)
+
+
 
 export { router };

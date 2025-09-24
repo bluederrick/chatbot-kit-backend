@@ -1,9 +1,9 @@
 import express from 'express';
 import cors from 'cors';
-import { router } from './src/routes/chat.js';
+import { router as chatApi} from './src/routes/chat.js';
 
 export const middleWareFn =(app)=>{
-const whiteList = '*';
+const whiteList = ['http://localhost:5000/api/v1'];
 
 const corsOptions = {
     
@@ -15,7 +15,11 @@ const corsOptions = {
     }
   }
 };
-app.use("/api", router);
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json(), cors(corsOptions));
+app.use(express.json());
+app.use(cors(corsOptions));
+
+app.use("/api/v1",chatApi);
+
+return app;
 }

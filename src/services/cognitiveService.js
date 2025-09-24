@@ -1,25 +1,21 @@
-
-const{COHERE_API_KEY}= process.env
 import { CohereClientV2 } from 'cohere-ai';
 import cohere from "cohere-ai";
 import { handleApiError } from '../utils/metaHandler.js';
-import { LoggerService } from '../utils/loggerService.js';
 
+
+const{COHERE_API_KEY}= process.env
+console.log( "env : " ,COHERE_API_KEY)
 const cohereClient = new CohereClientV2({
-  token:COHERE_API_KEY,
+  token:"BC9u5o0YSCyVKCCwSOmd7IaSV1VIaR2Qjx1AggOL",
 });
-// =====================================================
-// COHERE.ai SERVICE :
-// =====================================================
  class cohereService {
-  constructor(cohereClient) {
-    this.cohereClient = cohereClient; 
-    this.LoggerService = new LoggerService()
+   constructor(client=cohereClient) {
+    this.client = client;
   }
-
-  async chat(message) {
+   chat(message) {
+    console.log("message",message)
     try {
-      const response = await this.cohereClient.chat({
+      const response =  this.client.chat({
         model: "command-a-03-2025",
         messages: [
           {
@@ -28,12 +24,11 @@ const cohereClient = new CohereClientV2({
           },
         ],
       });
-
+console.log(response)
       return response; // return the response to the caller
     } catch (error) {
-        this.logger.info(`Received message: ${error}`);
-      // console.error("Error in CohereService.chat:", error);
-return handleApiError(error )
+throw error
+// return handleApiError(error )
     }
   }
 }

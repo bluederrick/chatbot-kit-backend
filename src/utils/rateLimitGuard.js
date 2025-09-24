@@ -31,7 +31,7 @@ class RateLimiter {
       throw new Error(`Rate limit exceeded for ${clientIP}, requestId: ${requestId}`);
     }
 
-    return true; // ✅ allowed
+    return true; 
   }
 }
 

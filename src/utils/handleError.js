@@ -1,6 +1,4 @@
-// =====================================================
-// validation error :
-// =====================================================
+import { respond } from "./respond.js";
 export class ValidationError extends Error {
     constructor(message, details = {}) {
         super(message);
@@ -36,26 +34,19 @@ export class InternalServerError extends Error {
     }
 }
 
-// =====================================================
-// LOGGER SERVICE
-// =====================================================
 
-export class LoggerService {
-    constructor(serviceName = 'App', config = {}) {
-        this.serviceName = serviceName;
-        this.config = {
-            level: 'info',
-            enableColors: true,
-            enableTimestamp: true,
-            enableJson: false,
-            ...config
-        };
-        
-        this.levels = {
-            error: 0,
-            warn: 1,
-            info: 2,
-            debug: 3
-        };
-    }
-}
+ const handleErrorWithContext = (logger) => (error, res, context = {}) => {
+  // log the error with context
+  logger.error(`Error: ${error.message}`, {
+    stack: error.stack,
+    ...context,
+  });
+
+  // send structured error response
+  return respond(500)("Oops! Something went wrong")(res)({
+    error: error.message,
+    context,
+  });
+};
+
+export {handleErrorWithContext}

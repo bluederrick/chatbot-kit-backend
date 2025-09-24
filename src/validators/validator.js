@@ -5,17 +5,14 @@
  * @param {string} requestId - Unique ID for tracing/logging
  * @returns {object} - { success, data, errors }
  */
-const  validatorSanitizeRequest = (payload, requestId = null)=> {
+const  validatorSanitizeRequest =(payload, requestId = null)=> {
   const errors = [];
   const sanitized = {};
 
-  // Example: Required field `message`
   !payload.message || typeof payload.message !== "string"
   ? errors.push("Message is required and must be a string.")
   : (sanitized.message = payload.message.trim());
 
-
-  //  Example: Optional field `userId`
   if (payload.userId) {
     if (typeof payload.userId !== "string") {
       errors.push("userId must be a string.");

@@ -1,4 +1,4 @@
-// utils/apiErrorHandler.js
+
 export  const handleApiError =(error, context = "API Error")=> {
   // You can extend this later for better logging, alerting, etc.
   const message =
