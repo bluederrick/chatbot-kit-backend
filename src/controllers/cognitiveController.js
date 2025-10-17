@@ -38,39 +38,25 @@ class ChatManager {
         const startTime = new Date().toISOString();
         console.log("startTime:", startTime);
         const requestId = this.generateResponseId();
-        // console.log("requestId", requestId )
+
         const clientIP = this.ipUtil.getIp(req);
-    //  console.log(clientIP)
+
         try {
             // Rate limiting check
             await this.ApiGatekeeper.checkLimit(clientIP, requestId);
 
-            // Comprehensive request validation
+            //  request validation
             const validatedPayload =  this.validatorSanitizeRequest(req.body, requestId);
 
-            // const chatResponse = processMessage(validatedPayload, {
-            //     requestId,
-            //     clientIP,
-            //     userAgent: req.headers['user-agent'],
-            //     timestamp: new Date().toISOString()
-            // });
 
             const chatResponse = await processMessage({
            cohereService: this.CohereService ,
-           logger: this.Logger,   // 👈 passing the logger instance here
+           logger: this.Logger,  
            validatedPayload,
         //    meta,
       });
 
       console.log(chatResponse)
-
-            // Success metrics collection
-            // this.metrics.recordSuccess('chat_request', Date.now() - startTime, {
-            //     userId: validatedPayload.userId,
-            //     messageLength: validatedPayload.message.length
-            // });
-
-            // Structured success response
             return respond(200)("Chat response generated successfully")(res)({
                 ...chatResponse,
                 metadata: {

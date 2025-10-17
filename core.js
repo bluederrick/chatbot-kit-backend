@@ -1,13 +1,16 @@
 import express from 'express';
+import { Database } from './src/config/database.js';
+import { middleWareFn } from './app.js'; 
 import dotenv from "dotenv";
-const server = express()
-import { middleWareFn } from './app.js';
+import logger from './src/utils/Loggers.js';
 dotenv.config()
+const server = express()
+const db = new Database();
+db.connect();
 const{PORT}=process.env
 
 middleWareFn(server);
 
-
 server.listen(PORT || 5000, ()=>{
-   console.log(`Server listening on port ${PORT}`)
+   logger.info(`Server listening on port ${PORT}`)
 })
