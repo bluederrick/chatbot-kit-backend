@@ -56,7 +56,7 @@ class ChatManager {
         //    meta,
       });
 
-      console.log(chatResponse)
+
             return respond(200)("Chat response generated successfully")(res)({
                 ...chatResponse,
                 metadata: {

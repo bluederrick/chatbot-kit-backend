@@ -5,7 +5,7 @@ import cohere from "cohere-ai";
 import { handleApiError } from '../utils/metaHandler.js';
 
 const{COHERE_API_KEY,COGNITIVE_TOKEN}= process.env
-console.log( "env : " ,COHERE_API_KEY)
+
 const cohereClient = new CohereClientV2({
   token:COGNITIVE_TOKEN,
 });
